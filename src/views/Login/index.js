@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
 import './Login.scss';
 import { Button, Form, Input, notification ,} from 'antd';
@@ -6,8 +6,17 @@ import { $login } from '../../api/adminApi';
 import MyNotification from '../../components/MyNotification/MyNotification';
 
 export default function Login() {
+
   let [notiMsg, setNotiMsg] = useState({type:'', description:''})
   let navigate = useNavigate()
+  // 判断是否已登陆
+  useEffect((first) =>{
+    if(sessionStorage.getItem('token')){
+      navigate('layout')
+    }
+  },[])
+  
+
   // 表单成功的方法
   const onFinish = async (values) => {
     let {message, code} = await $login(values)
