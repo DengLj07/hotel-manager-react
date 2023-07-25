@@ -10,9 +10,9 @@ export default function Login() {
   let [notiMsg, setNotiMsg] = useState({type:'', description:''})
   let navigate = useNavigate()
   // 判断是否已登陆
-  useEffect((first) =>{
+  useEffect(()=>{
     if(sessionStorage.getItem('token')){
-      navigate('layout')
+      navigate('/layout')
     }
   },[])
   
