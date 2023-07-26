@@ -15,3 +15,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.search{
+  margin-bottom: 5px;
+}

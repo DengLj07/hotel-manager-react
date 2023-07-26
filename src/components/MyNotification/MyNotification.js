@@ -14,7 +14,8 @@ export default function MyNotification({notiMsg}) {
     if(notiMsg.type){
       api[notiMsg.type]({
         message:'系统提示',
-        description:notiMsg.description
+        description:notiMsg.description,
+        duration:2
       })
     }
   },[notiMsg]
