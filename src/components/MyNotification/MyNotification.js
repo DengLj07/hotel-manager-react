@@ -9,13 +9,13 @@ export default function MyNotification({notiMsg}) {
   //     description
   //   })
   // };
-  console.log(notiMsg)
   useEffect(() => {
     if(notiMsg.type){
       api[notiMsg.type]({
         message:'系统提示',
         description:notiMsg.description,
-        duration:2
+        duration:2,
+        placement:'top'
       })
     }
   },[notiMsg]

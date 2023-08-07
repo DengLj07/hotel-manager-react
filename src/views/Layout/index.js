@@ -67,7 +67,7 @@ export default function () {
           label: '角色管理'
         },
         {
-          key: 'user',
+          key: 'admin',
           label: '用户管理'
         }
       ]
@@ -109,6 +109,9 @@ export default function () {
     switch (e.key) {
       case 'role':
         navigate('/layout/role')
+        break
+      case 'admin':
+        navigate('/layout/admin')
         break
       case 'exit':
         // 退出系统

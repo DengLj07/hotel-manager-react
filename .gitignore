@@ -1,3 +1,4 @@
 node_modules
 public/favicon.ico
 public/robots.txt
+.DS_Store

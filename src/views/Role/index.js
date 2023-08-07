@@ -1,35 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Drawer, Form, Input, Button } from 'antd';
+import { Table, Space, Button, Popconfirm } from 'antd';
+import { $list, $add, $del, $getOne,srcRoleList } from '../../api/roleApi';
+import AddRole from './addRole';
 import MyNotification from '../../components/MyNotification/MyNotification';
-import { $list, $add, srcRoleList } from '../../api/roleApi';
-
 
 export default function Role() {
-
-  // 定义表单实例
-  let [form] = Form.useForm()
-
-  let [notiMsg, setNotiMsg] = useState({ type: '', description: '' })
-
+  let [roleId, setRoleId] = useState(0)
   let [roleList, setRoleList] = useState([])
-
-  // 表单提交的方法
-  const onFinish = async (values) => {
-    const roleObj = { ...values, roleId: srcRoleList.length + 1 }
-    let { code, msg } = await $add(roleObj)
-    if (code === 200) {
-      setNotiMsg({ type: 'success', description: msg })
-      clear()
-      setOpen(false)
-      loadList()
-    } else {
-      setNotiMsg({ type: 'error', description: msg })
-    }
-  }
-  // 清空表单的方法
-  const clear = () => {
-    form.setFieldsValue({ roleName: '' })
-  }
+  let [notiMsg, setNotiMsg] = useState({ type: '', description: '' })
+  // 是否打开抽屉
+  const [open, setOpen] = useState(false)
   // 加载列表数据方法
   const loadList = () => {
     $list().then((data) => {
@@ -37,12 +17,22 @@ export default function Role() {
       setRoleList(data)
     })
   }
-  // 是否打开抽屉
-  const [open, setOpen] = useState(false)
-  // 关闭抽屉的方法
-  const onClose = () => {
-    clear()
-    setOpen(false)
+  // 删除角色
+  const del = (id) => {
+    $del(id).then((r) => {
+      let { code, msg } = r
+      if (code === 200) {
+        setNotiMsg({ type: 'success', description: msg })
+        loadList()
+      } else {
+        setNotiMsg({ type: 'error', description: msg })
+      }
+    })
+  }
+  const edit = (id) => {
+    // 打开抽屉，设置为编辑状态
+    setOpen(true)
+    setRoleId(id)
   }
   useEffect(() => {
     loadList()
@@ -52,11 +42,37 @@ export default function Role() {
     {
       title: '角色编号',
       dataIndex: 'roleId',
+      width: '100px',
     },
     {
       title: '角色名称',
       dataIndex: 'roleName',
-    }
+      width: '200px',
+    },
+    {
+      title: '操作',
+      key: 'action',
+      width: '500px',
+      render: (ret) => (
+        <>
+          <Button size='small' style={{borderColor:'orange',color:'orange', marginRight:'10px'}} 
+          onClick={() => {
+            edit(ret.roleId)
+          }}
+          >
+            编辑
+          </Button>
+          <Popconfirm
+            title="系统提示"
+            description="确认删除角色?"
+            onConfirm={() => { del(ret.roleId) }}
+            okText="确认"
+            cancelText="取消">
+            <Button danger size='small'>删除</Button>
+          </Popconfirm>
+        </>
+      ),
+    },
   ];
   return (
     <>
@@ -64,52 +80,7 @@ export default function Role() {
         <button size='small' onClick={() => { setOpen(true) }}>添加</button>
       </div>
       <Table dataSource={roleList} columns={columns} />
-      <Drawer title='添加角色' placement='right' width={500} onClose={onClose} open={open}>
-        <Form
-          name="basic"
-          labelCol={{
-            span: 4,
-          }}
-          wrapperCol={{
-            span: 18,
-          }}
-          style={{
-            maxWidth: 600,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-          autoComplete="off"
-          form={form}
-        >
-          <Form.Item
-            label="角色名称"
-            name="roleName"
-            rules={[
-              {
-                required: true,
-                message: '请输入角色名称',
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            wrapperCol={{
-              offset: 4,
-              span: 16,
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              添加
-            </Button>
-            <Button style={{ marginLeft: '10px' }} onClick={() => { onClose() }}>
-              取消
-            </Button>
-          </Form.Item>
-        </Form>
-      </Drawer>
+      <AddRole open={open} setOpen={setOpen} loadList={loadList} roleId={roleId} setRoleId={setRoleId}/>
       <MyNotification notiMsg={notiMsg} />
     </>
   )
