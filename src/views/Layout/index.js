@@ -1,5 +1,5 @@
 import React, { useState,useEffect} from 'react';
-import { useNavigate,Outlet } from 'react-router-dom';
+import { useNavigate,Outlet} from 'react-router-dom';
 // 图标
 import {
   ExclamationCircleFilled,
@@ -113,6 +113,12 @@ export default function () {
       case 'admin':
         navigate('/layout/admin')
         break
+      case 'my':
+        navigate('/layout/mine')
+        break
+      case 'pwd':
+        navigate('/layout/pwd')
+        break
       case 'exit':
         // 退出系统
         confirm({
@@ -152,7 +158,11 @@ export default function () {
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
           />
-          <Menu onClick={onClickMenu} theme='dark' className='menu' selectedKeys={[current]} mode="horizontal" items={items} />
+          <Menu onClick={onClickMenu} theme='dark' 
+          className='menu' 
+          selectedKeys={[current]} 
+          mode="horizontal" 
+          items={items} />
         </Header>
         <Content className='content'>
           <Outlet></Outlet>

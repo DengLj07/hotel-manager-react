@@ -1,14 +1,18 @@
 import React, { useState,useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import './Login.scss';
 import { Button, Form, Input, notification ,} from 'antd';
-import { $login } from '../../api/adminApi';
+import { $login, $getOne } from '../../api/adminApi';
 import MyNotification from '../../components/MyNotification/MyNotification';
-
+import { loginAdmin } from '../../redux';
 export default function Login() {
 
   let [notiMsg, setNotiMsg] = useState({type:'', description:''})
   let navigate = useNavigate()
+  // 定义派发器
+  const dispatch = useDispatch()
+  let {setAdmin} = loginAdmin.actions
   // 判断是否已登陆
   useEffect(()=>{
     if(sessionStorage.getItem('token')){
@@ -21,6 +25,11 @@ export default function Login() {
   const onFinish = async (values) => {
     let {message, code} = await $login(values)
     if (code === 200){
+      // 将账号存储存储到缓存
+      sessionStorage.setItem('loginId',values.loginId)
+      let {data} = await $getOne(values.loginId)
+      // 将当前登陆账户信息存储到redux
+      dispatch(setAdmin(data))
       // 登陆成功提示
       setNotiMsg({type:'success', description:message})
       // 跳转到首页

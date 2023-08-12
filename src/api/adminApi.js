@@ -9,7 +9,10 @@ export let adminList = [
     name:'管理员',
     phone:'13210001000',
     photo:'/src/',
-    roleId:'1'
+    roleId:'1',
+    role:{
+      roleName:'系统管理员'
+    }
   },
   {
     id:2,
@@ -150,4 +153,15 @@ export const $del = async (loginId) => {
     code:200,
     msg:'删除账号成功',
   }
+}
+
+// 编辑密码
+export const $resetPwd =  async (params) => {
+  let {id, OldloginPwd, NewloginPwd} = params
+  adminList.map((cur) => {
+    if(cur.id ===id && OldloginPwd === cur.loginPwd){
+      cur.loginPwd=NewloginPwd
+    }
+  })
+  return {code:200,msg:'修改密码成功'}
 }
