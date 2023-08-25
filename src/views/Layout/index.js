@@ -119,6 +119,12 @@ export default function () {
       case 'pwd':
         navigate('/layout/pwd')
         break
+      case 'type':
+        navigate('/layout/type')
+        break
+      case 'room':
+        navigate('/layout/room')
+        break
       case 'exit':
         // 退出系统
         confirm({

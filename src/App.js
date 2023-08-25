@@ -9,6 +9,8 @@ import Role from './views/Role';
 import Admin from './views/Admin';
 import Mine from './views/Admin/Mine';
 import UpdatePwd from './views/Admin/UpdatePwd';
+import Type from './views/Type/Type';
+import Room from './views/Room/Room';
 
 
 export default function App() {
@@ -34,6 +36,8 @@ export default function App() {
           <Route path='admin' element={<Admin/>}/>
           <Route path='mine' element={<Mine/>}/>
           <Route path='pwd' element={<UpdatePwd/>}/>
+          <Route path='type' element={<Type/>}/>
+          <Route path='room' element={<Room/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
