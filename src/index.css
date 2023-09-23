@@ -21,3 +21,8 @@ body {
 .publish-quill .ql-editor{
   min-height: 300px;
 }
+.td{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

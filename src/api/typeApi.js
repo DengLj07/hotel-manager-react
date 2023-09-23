@@ -68,3 +68,28 @@ export const $del = async (roomTypeId) => {
   RoomTypeList = newRoomTypeList
   return {code:200, msg:'删除角色成功'}
 }
+
+export const $totalPrice = () => {
+  return {
+    code:200,
+    msg:"获取销售额成功",
+    data:[
+      {
+        roomTypeName:'标准间',
+        totalPrice:20000
+      },
+      {
+        roomTypeName:'双人房',
+        totalPrice:3000
+      },
+      {
+        roomTypeName:'大床房',
+        totalPrice:4000
+      },
+      {
+        roomTypeName:'豪华房',
+        totalPrice:10000
+      },
+    ]
+  }
+}

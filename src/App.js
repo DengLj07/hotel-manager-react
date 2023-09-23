@@ -11,7 +11,8 @@ import Mine from './views/Admin/Mine';
 import UpdatePwd from './views/Admin/UpdatePwd';
 import Type from './views/Type/Type';
 import Room from './views/Room/Room';
-
+import Guest from './views/Guest/Guest';
+import TotalPrice from './views/Type/TotalPrice';
 
 export default function App() {
   const dispatch = useDispatch()
@@ -38,6 +39,8 @@ export default function App() {
           <Route path='pwd' element={<UpdatePwd/>}/>
           <Route path='type' element={<Type/>}/>
           <Route path='room' element={<Room/>}/>
+          <Route path='guest' element={<Guest/>}/>
+          <Route path='total' element={<TotalPrice/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

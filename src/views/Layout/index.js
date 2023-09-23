@@ -92,7 +92,7 @@ export default function () {
       ]
     },
     {
-      key: 'customer',
+      key: 'guest',
       icon: <SettingOutlined />,
       label: '客户管理',
     },
@@ -124,6 +124,9 @@ export default function () {
         break
       case 'room':
         navigate('/layout/room')
+        break
+      case 'guest':
+        navigate('/layout/guest')
         break
       case 'exit':
         // 退出系统
